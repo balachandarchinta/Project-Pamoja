@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, Express } from 'express';
 import { state } from './schema.js';
 import { broadcastState } from './sse.js';
 import { GoogleGenAI, ThinkingLevel } from '@google/genai';
@@ -8,7 +8,7 @@ import { z } from 'zod';
 import xss from 'xss';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-for-development';
+const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-key';
 
 const ApprovalSchema = z.object({
   action: z.enum(['approve', 'reject']),
@@ -22,7 +22,7 @@ const IncidentSchema = z.object({
 
 const ThinkSchema = z.object({
   query: z.string().min(1),
-  context: z.any()
+  context: z.unknown()
 });
 
 let ai: GoogleGenAI | null = null;
@@ -37,7 +37,7 @@ function getAiClient(): GoogleGenAI {
   return ai;
 }
 
-export function setupApiRoutes(app: any) {
+export function setupApiRoutes(app: Express) {
   // Apply Helmet for security headers
   app.use(helmet({
     contentSecurityPolicy: false, // Vite uses inline scripts in dev
@@ -78,8 +78,8 @@ export function setupApiRoutes(app: any) {
         return res.status(403).json({ error: `Forbidden: requires ${requiredRole} role` });
       }
       next();
-    } catch (err) {
-      return res.status(401).json({ error: 'Unauthorized: token verification failed' });
+    } catch {
+      return res.status(403).json({ error: 'Invalid or expired token.' });
     }
   };
 
@@ -179,7 +179,7 @@ export function setupApiRoutes(app: any) {
       });
       
       res.json({ result: response.text });
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error("Thinking mode error:", e);
       // Fallback response for AI quota exceeded or 503 errors as per GUARDRAILS.md
       res.json({ result: "System fallback: AI assistant is temporarily unavailable. Please rely on manual operational procedures." });

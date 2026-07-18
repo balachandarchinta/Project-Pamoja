@@ -1,6 +1,6 @@
 import { GlobalState } from '../types';
-import { CheckCircle2, Circle } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Circle } from 'lucide-react';
+import { useEffect, useState, useMemo } from 'react';
 
 interface Props {
   state: GlobalState;
@@ -10,9 +10,11 @@ export function VolunteerDashboard({ state }: Props) {
   const [announcement, setAnnouncement] = useState('');
 
   // Volunteers only see executed decisions that require physical actions or info updates
-  const recentTasks = state.recentDecisions.filter(d => 
-    d.priority !== 'Low' && d.recommendations.some(r => !r.requiresHumanApproval || d.agentId === 'human-in-the-loop')
-  ).slice(-5);
+  const recentTasks = useMemo(() => {
+    return state.recentDecisions.filter(d => 
+      d.priority !== 'Low' && d.recommendations.some(r => !r.requiresHumanApproval || d.agentId === 'human-in-the-loop')
+    ).slice(-5);
+  }, [state.recentDecisions]);
 
   useEffect(() => {
     if (recentTasks.length > 0) {

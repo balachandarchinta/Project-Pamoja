@@ -1,3 +1,4 @@
+import React, { useMemo } from 'react';
 import { GlobalState } from '../types';
 
 interface Props {
@@ -15,15 +16,18 @@ const ZONES = [
   { id: 'H', cx: 60, cy: 200, gateId: '7', gateCx: 10, gateCy: 200 },
 ];
 
-export function StadiumVisualizer({ state }: Props) {
+export const StadiumVisualizer = React.memo(function StadiumVisualizer({ state }: Props) {
   // Find zones with active incidents
-  const incidentZones = new Set<string>();
-  state.mockData.activeIncidents.forEach(inc => {
-    const match = inc.location.match(/Zone ([A-H])/);
-    if (match) {
-      incidentZones.add(match[1]);
-    }
-  });
+  const incidentZones = useMemo(() => {
+    const zones = new Set<string>();
+    state.mockData.activeIncidents.forEach(inc => {
+      const match = inc.location.match(/Zone ([A-H])/);
+      if (match) {
+        zones.add(match[1]);
+      }
+    });
+    return zones;
+  }, [state.mockData.activeIncidents]);
 
   return (
     <div className="relative w-full aspect-square bg-white border border-[#E5E5E0] flex items-center justify-center p-8">
@@ -104,4 +108,4 @@ export function StadiumVisualizer({ state }: Props) {
       </div>
     </div>
   );
-}
+});

@@ -2,10 +2,9 @@ import React from 'react';
 import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from '../src/App';
-import * as orchestration from '../src/hooks/useOrchestratorStream';
 import { GlobalState } from '../src/types';
 
-const mockState: GlobalState = {
+const mockState = {
   mockData: {
     matchPhase: 'First Half',
     activeIncidents: [],

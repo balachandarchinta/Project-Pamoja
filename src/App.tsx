@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
 import { LandingView } from './components/LandingView';
-import { OrganizerDashboard } from './components/OrganizerDashboard';
-import { VolunteerDashboard } from './components/VolunteerDashboard';
-import { VenueStaffDashboard } from './components/VenueStaffDashboard';
 import { useOrchestratorStream } from './hooks/useOrchestratorStream';
+
+const OrganizerDashboard = lazy(() => import('./components/OrganizerDashboard').then(m => ({ default: m.OrganizerDashboard })));
+const VolunteerDashboard = lazy(() => import('./components/VolunteerDashboard').then(m => ({ default: m.VolunteerDashboard })));
+const VenueStaffDashboard = lazy(() => import('./components/VenueStaffDashboard').then(m => ({ default: m.VenueStaffDashboard })));
 
 export type Role = 'ORGANIZER' | 'VOLUNTEER' | 'VENUE_STAFF' | null;
 
@@ -50,10 +51,12 @@ return (
         </div>
       </div>
     </header>
-    <main className="flex-1 max-w-7xl mx-auto w-full p-8 md:p-10">
-        {role === 'ORGANIZER' && <OrganizerDashboard state={state} trendHistory={trendHistory} />}
-        {role === 'VOLUNTEER' && <VolunteerDashboard state={state} />}
-        {role === 'VENUE_STAFF' && <VenueStaffDashboard state={state} />}
+      <main className="flex-1 max-w-7xl mx-auto w-full p-8 md:p-10">
+        <Suspense fallback={<div className="p-8 text-sm text-[#70706B]">Loading dashboard...</div>}>
+          {role === 'ORGANIZER' && <OrganizerDashboard state={state} trendHistory={trendHistory} />}
+          {role === 'VOLUNTEER' && <VolunteerDashboard state={state} />}
+          {role === 'VENUE_STAFF' && <VenueStaffDashboard state={state} />}
+        </Suspense>
       </main>
       <footer className="h-12 border-t border-[#E5E5E0] px-8 flex items-center bg-[#FDFDFB] mt-auto">
         <div className="flex gap-8 items-center w-full">

@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
+import { Request, Response, Express } from 'express';
 import { state } from './schema.js';
 
 const clients: Response[] = [];
 const MAX_SSE_CLIENTS = 100; // As per GUARDRAILS.md (SSE Connection Limits)
 
-export function registerSSE(app: any) {
+export function registerSSE(app: Express) {
   app.get('/api/stream', (req: Request, res: Response) => {
     if (clients.length >= MAX_SSE_CLIENTS) {
       return res.status(429).json({ error: 'Too many concurrent SSE connections.' });

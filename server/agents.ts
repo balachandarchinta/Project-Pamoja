@@ -25,7 +25,7 @@ export async function runNavigationAgent(data: MockDataState): Promise<AgentOutp
 
 export async function runCrowdAgent(data: MockDataState): Promise<AgentOutput | null> {
   // Detect HIGH density (> 4 people/m2)
-  const highDensityZones = Object.entries(data.zoneDensity).filter(([zone, density]) => density > 4);
+  const highDensityZones = Object.entries(data.zoneDensity).filter(([_, density]) => density > 4);
   
   if (highDensityZones.length > 0) {
     return {

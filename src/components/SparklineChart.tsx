@@ -1,3 +1,4 @@
+import React from 'react';
 import { LineChart, Line, ResponsiveContainer, YAxis } from 'recharts';
 import { TrendData } from '../hooks/useOrchestratorStream';
 
@@ -7,7 +8,7 @@ interface Props {
   color?: string;
 }
 
-export function SparklineChart({ data, dataKey, color = '#1A1A1A' }: Props) {
+export const SparklineChart = React.memo(function SparklineChart({ data, dataKey, color = '#1A1A1A' }: Props) {
   if (!data || data.length === 0) {
     return <div className="w-full h-full flex items-center justify-center text-[10px] text-[#70706B] uppercase font-medium">Gathering data...</div>;
   }
@@ -35,4 +36,4 @@ export function SparklineChart({ data, dataKey, color = '#1A1A1A' }: Props) {
       </ResponsiveContainer>
     </div>
   );
-}
+});

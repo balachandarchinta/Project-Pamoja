@@ -11,8 +11,16 @@ export interface AgentOutput {
   timestamp: string;
   confidenceScore: number;
   priority: 'Low' | 'Medium' | 'High';
-  domainMetadata: Record<string, any>;
+  domainMetadata: Record<string, unknown>;
   recommendations: AgentRecommendation[];
+}
+
+export interface Incident {
+  id: string;
+  type: string;
+  location: string;
+  timestamp: string;
+  status: 'ACTIVE' | 'RESOLVED';
 }
 
 export interface MockDataState {
@@ -22,7 +30,7 @@ export interface MockDataState {
   parkingOccupancy: number;
   shuttleOccupancy: number;
   transitETA: number;
-  activeIncidents: any[];
+  activeIncidents: Incident[];
   matchPhase: string;
 }
 
@@ -41,7 +49,7 @@ export interface ApprovalItem {
   createdAt: number;
   timeoutAt: number;
   crossDomain: boolean;
-  domainMetadata: Record<string, any>;
+  domainMetadata: Record<string, unknown>;
 }
 
 export interface GlobalState {
