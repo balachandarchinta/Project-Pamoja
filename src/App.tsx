@@ -22,7 +22,7 @@ export default function App() {
 
   if (!state) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[#F9F9F7] text-[#1A1A1A] font-sans">
+      <div className="flex items-center justify-center min-h-screen bg-[#F9F9F7] text-[#1A1A1A] font-sans" role="status" aria-live="polite">
       <p className="text-sm font-medium uppercase tracking-wider text-[#70706B]">Connecting to orchestrator...</p>
     </div>
   );
@@ -38,6 +38,7 @@ return (
         <select
           value={role || ''}
           onChange={(e) => setRole(e.target.value as Role)}
+          aria-label="Select user role"
           className="appearance-none bg-transparent text-[11px] font-medium uppercase tracking-wider text-[#70706B] hover:text-[#1A1A1A] transition-colors outline-none cursor-pointer pr-4"
         >
           <option value="ORGANIZER">Organizer</option>
@@ -57,8 +58,8 @@ return (
       <footer className="h-12 border-t border-[#E5E5E0] px-8 flex items-center bg-[#FDFDFB] mt-auto">
         <div className="flex gap-8 items-center w-full">
           <div className="flex items-center gap-2">
-            <div className={`w-1.5 h-1.5 ${isConnected ? 'bg-[#2D6A4F] animate-pulse' : 'bg-[#BC4749]'}`}></div>
-            <span className="text-[10px] uppercase font-medium">
+            <div className={`w-1.5 h-1.5 ${isConnected ? 'bg-[#2D6A4F] animate-pulse' : 'bg-[#BC4749]'}`} aria-hidden="true"></div>
+            <span className="text-[10px] uppercase font-medium" role="status" aria-live="polite">
               Live Stream: {isConnected ? 'All Agents Operational' : 'Connection Lost'}
             </span>
           </div>

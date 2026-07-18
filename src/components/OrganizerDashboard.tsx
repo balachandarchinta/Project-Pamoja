@@ -15,11 +15,11 @@ export function OrganizerDashboard({ state, trendHistory }: Props) {
   
   return (
     <div className="space-y-10">
-      <div className="flex justify-between items-center bg-white border border-[#E5E5E0] p-4">
-        <h2 className="text-xs font-medium uppercase tracking-[0.15em] text-[#70706B]">Current Match Phase</h2>
+      <section className="flex justify-between items-center bg-white border border-[#E5E5E0] p-4" aria-labelledby="phase-heading">
+        <h2 id="phase-heading" className="text-xs font-medium uppercase tracking-[0.15em] text-[#70706B]">Current Match Phase</h2>
         <span className="text-sm font-medium tracking-wide text-[#1A1A1A]">{mockData.matchPhase || 'Loading...'}</span>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      </section>
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6" aria-label="Key Performance Indicators">
         <div className="bg-white border border-[#E5E5E0] p-6 flex flex-col justify-between">
           <div>
             <p className="text-[10px] uppercase font-medium text-[#70706B] mb-4">Total Attendance</p>
@@ -43,7 +43,7 @@ export function OrganizerDashboard({ state, trendHistory }: Props) {
           </div>
         </div>
 
-        <div className="bg-white border border-[#E5E5E0] p-6 border-l-4 border-l-[#BC4749] flex flex-col justify-between">
+        <div className="bg-white border border-[#E5E5E0] p-6 border-l-4 border-l-[#BC4749] flex flex-col justify-between" role="region" aria-live="polite">
           <div>
             <p className="text-[10px] uppercase font-medium text-[#70706B] mb-4">Active Incidents</p>
             <h2 className="text-5xl font-medium tracking-tight text-[#BC4749]">{mockData.activeIncidents.length}</h2>
@@ -53,8 +53,7 @@ export function OrganizerDashboard({ state, trendHistory }: Props) {
             <AiResolutionAssistant state={state} />
           </div>
         </div>
-      </div>
-
+      </section>
       <div className="flex flex-col lg:flex-row gap-10">
         <div className="flex-1">
           <h3 className="text-xs font-medium uppercase tracking-[0.15em] pb-2 border-b border-[#E5E5E0] mb-6">Live Stadium Map</h3>
@@ -106,12 +105,14 @@ export function OrganizerDashboard({ state, trendHistory }: Props) {
                   <button 
                     onClick={() => approveAction(item.id, 'approve', item.targetApprovers)}
                     className="flex-1 bg-[#1A1A1A] text-white text-[11px] font-medium uppercase py-3"
+                    aria-label={`Approve action: ${item.actionType}`}
                   >
                     Approve Action
                   </button>
                   <button 
                     onClick={() => approveAction(item.id, 'reject', item.targetApprovers)}
                     className="px-6 border border-[#E5E5E0] text-[#1A1A1A] text-[11px] font-medium uppercase hover:bg-[#F9F9F7]"
+                    aria-label={`Reject action: ${item.actionType}`}
                   >
                     Reject
                   </button>

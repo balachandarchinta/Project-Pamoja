@@ -15,7 +15,7 @@ export function stopOrchestrator() {
   interval = null;
 }
 
-function updateMockData() {
+export function updateMockData() {
   cycleCount++;
   
   const phaseCycle = Math.floor(cycleCount / 6) % 5;

@@ -31,8 +31,8 @@ export function VenueStaffDashboard({ state }: Props) {
       </div>
       
       <div className="lg:w-[60%] flex flex-col gap-10">
-        <div>
-          <h3 className="text-xs font-medium uppercase tracking-[0.15em] pb-2 border-b border-[#E5E5E0] mb-6">Active Incidents</h3>
+        <section aria-labelledby="incidents-heading" role="region" aria-live="polite">
+          <h3 id="incidents-heading" className="text-xs font-medium uppercase tracking-[0.15em] pb-2 border-b border-[#E5E5E0] mb-6">Active Incidents</h3>
           
           {state.mockData.activeIncidents.length === 0 ? (
             <p className="text-sm text-[#70706B] mb-6 py-4">No active incidents.</p>
@@ -52,22 +52,22 @@ export function VenueStaffDashboard({ state }: Props) {
 
           <div className="bg-white border border-[#E5E5E0] p-6 flex items-end gap-4">
             <div className="flex-1">
-            <label className="block text-[10px] uppercase font-medium text-[#70706B] mb-2">Incident Type</label>
-            <select value={incidentType} onChange={e=>setIncidentType(e.target.value)} className="w-full border-[#E5E5E0] text-sm shadow-sm border p-3 bg-white outline-none">
+            <label htmlFor="incidentType" className="block text-[10px] uppercase font-medium text-[#70706B] mb-2">Incident Type</label>
+            <select id="incidentType" value={incidentType} onChange={e=>setIncidentType(e.target.value)} className="w-full border-[#E5E5E0] text-sm shadow-sm border p-3 bg-white outline-none">
               <option value="BLOCKED_CORRIDOR">Blocked Corridor</option>
               <option value="MEDICAL">Medical Emergency</option>
               <option value="GATE_FAILURE">Gate Failure</option>
             </select>
           </div>
           <div className="flex-1">
-            <label className="block text-[10px] uppercase font-medium text-[#70706B] mb-2">Location</label>
-            <input type="text" value={location} onChange={e=>setLocation(e.target.value)} className="w-full border-[#E5E5E0] text-sm shadow-sm border p-3 outline-none" />
+            <label htmlFor="incidentLocation" className="block text-[10px] uppercase font-medium text-[#70706B] mb-2">Location</label>
+            <input id="incidentLocation" type="text" value={location} onChange={e=>setLocation(e.target.value)} className="w-full border-[#E5E5E0] text-sm shadow-sm border p-3 outline-none" />
           </div>
           <button onClick={reportIncident} className="px-6 bg-[#1A1A1A] text-white text-[11px] font-medium uppercase h-[46px]">
             Report Event
           </button>
         </div>
-      </div>
+      </section>
 
       <div>
         <h3 className="text-xs font-medium uppercase tracking-[0.15em] pb-2 border-b border-[#E5E5E0] mb-6">Your Approvals (Venue Operations Manager)</h3>

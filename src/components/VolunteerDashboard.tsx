@@ -26,7 +26,8 @@ export function VolunteerDashboard({ state }: Props) {
         {announcement}
       </div>
       
-      <h3 className="text-xs font-medium uppercase tracking-[0.15em] pb-2 border-b border-[#E5E5E0] mb-6">Task Checklist</h3>
+      <section aria-labelledby="task-heading">
+        <h3 id="task-heading" className="text-xs font-medium uppercase tracking-[0.15em] pb-2 border-b border-[#E5E5E0] mb-6">Task Checklist</h3>
       
       {recentTasks.length === 0 ? (
         <p className="text-sm text-[#70706B] text-center py-8">All clear. No active tasks.</p>
@@ -47,6 +48,7 @@ export function VolunteerDashboard({ state }: Props) {
           ))}
         </div>
       )}
+      </section>
       
       <div className="bg-[#4361EE]/10 border border-[#4361EE] p-5 mt-8">
         <h3 className="text-[10px] uppercase font-medium tracking-widest text-[#4361EE] mb-2">Accessibility Assist</h3>
