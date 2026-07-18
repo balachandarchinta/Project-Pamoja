@@ -1,0 +1,6 @@
+{
+  "name": "Project Pamoja",
+  "description": "A multi-agent GenAI system for real-time stadium operations at a FIFA World Cup 2026-class venue. Features role-based dashboards, deterministic conflict resolution, and human-in-the-loop approval routing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
